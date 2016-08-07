@@ -1,0 +1,8 @@
+../../src/./stack.cpp: In member function ‘bool Stacki32::full()’:
+../../src/./stack.cpp:21:31: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+   bool full() { if ( _top + 1 == _capacity ) return true; return false; }
+                               ^
+../../src/./stack.cpp: In member function ‘void Stacki32::print()’:
+../../src/./stack.cpp:26:37: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+   void print() { for ( u32 i = 0; i <= _top; i++ ) std::cout << _s[i] << " "; std::cout << "\n"; }
+                                     ^
