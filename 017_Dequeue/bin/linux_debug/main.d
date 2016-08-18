@@ -1,5 +1,5 @@
-dequeue.o: ../../src/./dequeue.cpp /usr/include/stdc-predef.h \
- /usr/include/c++/5/iostream \
+main.o: ../../src/./main.cpp /usr/include/stdc-predef.h \
+ ../../src/./dequeue.h /usr/include/c++/5/iostream \
  /usr/include/x86_64-linux-gnu/c++/5/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/5/bits/os_defines.h \
  /usr/include/features.h /usr/include/x86_64-linux-gnu/sys/cdefs.h \

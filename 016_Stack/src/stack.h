@@ -13,7 +13,7 @@ template<class Type>
 std::ostream& operator<<(std::ostream&, const Stack<Type>&);
 
 /**
- * Simple Stack class with default operation push and pop
+ * Simple Stack class with default operations push and pop
  */
 template <class Type=i32> 
 class Stack{
