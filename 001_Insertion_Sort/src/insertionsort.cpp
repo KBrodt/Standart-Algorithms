@@ -6,7 +6,6 @@
 
 //#define DEBUG
 
-
 double wtime() {
     struct timeval t;
     gettimeofday(&t, NULL);
