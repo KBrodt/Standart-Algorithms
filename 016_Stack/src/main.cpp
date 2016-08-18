@@ -1,7 +1,8 @@
 #include "stack.h"
 
 i32 main(i32 argc, char* argv[]) {
-  Stack<> s;
+  Stack<> s{-1, -2, -3};
+  std::cout << s << "\n";
   s.push(15);
   s.push(6);
   s.push(2);

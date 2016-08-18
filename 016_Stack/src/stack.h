@@ -2,6 +2,8 @@
 #define STDALG_STACK_H_
 
 #include <iostream>
+#include <algorithm>    // std::copy
+//#include <initializer_list>  // std::initializer_list
 
 using i32 = int;
 using u32 = unsigned;
@@ -30,6 +32,7 @@ public:
     : s_(new Type[capacity]),
       capacity_(capacity),
       top_(-1) {}
+  Stack(const std::initializer_list<Type>& list);
   ~Stack() { delete [] s_; }
 
   bool empty() const;
@@ -46,6 +49,14 @@ public:
 
   friend std::ostream& operator<<<>(std::ostream& os, const Stack& stack);
 };
+
+template <class Type>
+Stack<Type>::Stack(const std::initializer_list<Type>& list) {
+  capacity_ = list.size() << 1;
+  top_ = static_cast<i32>(list.size()) - 1;
+  s_ = new Type[list.size()];
+  std::copy(list.begin(), list.end(), &s_[0]);
+}
 
 template <class Type>
 bool Stack<Type>::empty() const {
