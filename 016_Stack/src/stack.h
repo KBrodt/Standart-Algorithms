@@ -54,7 +54,7 @@ template <class Type>
 Stack<Type>::Stack(const std::initializer_list<Type>& list) {
   capacity_ = list.size() << 1;
   top_ = static_cast<i32>(list.size()) - 1;
-  s_ = new Type[list.size()];
+  s_ = new Type[capacity_];
   std::copy(list.begin(), list.end(), &s_[0]);
 }
 

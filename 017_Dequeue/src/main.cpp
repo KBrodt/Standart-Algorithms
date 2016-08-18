@@ -1,7 +1,8 @@
 #include "dequeue.h"
 
 i32 main() {
-  Dequeue<> dequeue;
+  Dequeue<> dequeue{-1,-2,-3};
+  std::cout << dequeue << "s: " << dequeue.size() << "\n";
   std::cout << dequeue.empty() << "\n";
   std::cout << dequeue.full() << "\n";
   dequeue.push_back(1); std::cout << dequeue << "s: " << dequeue.size() << "\n";
@@ -22,5 +23,7 @@ i32 main() {
   dequeue.push_back(100); std::cout << dequeue << "s: " << dequeue.size() << "\n";
   std::cout << dequeue.empty() << "\n";
   std::cout << dequeue.full() << "\n";
+  dequeue.push_back(-100); std::cout << dequeue << "s: " << dequeue.size() << "\n";
+
   return 0;
 }

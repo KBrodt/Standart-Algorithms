@@ -2,6 +2,7 @@
 #define STDALG_DEQUEUE_H_
 
 #include <iostream>
+#include <algorithm>
 
 using i32 = int;
 using u32 = unsigned;
@@ -33,6 +34,7 @@ public:
       capacity_(capacity),
       head_(0),
       tail_(0) {}
+  Dequeue(const std::initializer_list<Type>& list);
   ~Dequeue() { delete [] d_; }
 
   bool empty() const { return head_ == tail_; }
@@ -49,6 +51,14 @@ public:
 
   friend std::ostream& operator<<<>(std::ostream& os, const Dequeue& dequeue);
 };
+
+template <class Type>
+Dequeue<Type>::Dequeue(const std::initializer_list<Type>& list) {
+  capacity_ = list.size() << 1;
+  head_ = 0; tail_ = static_cast<i32>(list.size());
+  d_ = new Type[capacity_];
+  std::copy(list.begin(), list.end(), &d_[0]);
+}
 
 template <class Type>
 bool Dequeue<Type>::full() const {
