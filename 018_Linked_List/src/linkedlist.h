@@ -16,6 +16,10 @@ class LinkedList;
 template <class Type>
 std::ostream& operator<<(std::ostream&, const LinkedList<Type>&);
 
+/**
+ * Simple Linked List class with basic operations
+ * insert and delete.
+ */
 template <class Type=i32_t>
 class LinkedList {
 private:
