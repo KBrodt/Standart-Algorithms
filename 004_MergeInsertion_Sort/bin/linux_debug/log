@@ -1,0 +1,4 @@
+../../src/./mergeinsertionsort.cpp: In function ‘void generateRandomVector(u32, vectoru32&)’:
+../../src/./mergeinsertionsort.cpp:30:32: warning: large integer implicitly truncated to unsigned type [-Woverflow]
+     val = getrand(1, 4294967296);
+                                ^

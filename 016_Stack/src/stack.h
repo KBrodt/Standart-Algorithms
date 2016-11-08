@@ -111,6 +111,9 @@ Type Stack<Type>::pop() {
 
 template <class Type>
 std::ostream& operator<<(std::ostream& os, const Stack<Type>& stack) {
+  if ( stack.top_ == -1 ) {
+    return os;
+  }
   for ( u32 i = 0; i <= static_cast<u32>(stack.top_); ++i ) {
     os << stack.s_[i] << " ";
   }

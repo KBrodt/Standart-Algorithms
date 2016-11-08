@@ -98,9 +98,7 @@ void buildMaxHeap(Heap &h) {
 void heapSort(Heap &h) {
   buildMaxHeap(h);
   for ( u32 i = h.v.size() - 1; i !=0; i-- ) {
-    u32 tmp = h.v[0]; // std::swap(h.v[0], h.v[i]);
-    h.v[0] = h.v[i];
-    h.v[i] = tmp;
+    std::swap(h.v[0], h.v[i]);
     h.heapsize--;
     maxHeapify(h, 0);
   }
@@ -116,7 +114,7 @@ u32 heapExtractMax(Heap& h) {
     return 0;
   }
   u32 max = h.v[0];
-  h.v[0] = h.v[h.v[h.heapsize - 1]];
+  h.v[0] = h.v[h.heapsize - 1];
   h.heapsize--;
   maxHeapify(h, 0);
   return max;
@@ -129,9 +127,7 @@ void heapIncreaseKey(Heap& h, u32 i, u32 key) {
   }
   h.v[i] = key;
   while ( i > 0 && h.v[h.parent(i)] < h.v[i] ) {
-    u32 tmp = h.v[i];
-    h.v[i] = h.v[h.parent(i)];
-    h.v[h.parent(i)] = tmp;
+    std::swap(h.v[i], h.v[h.parent(i)]);
     i = h.parent(i);
   }
 }
@@ -145,6 +141,7 @@ void maxHeapInsert(Heap& h, u32 key) {
 void maxHeapDelete(Heap& h, u32 i) {
   h.heapsize--;
   h.v[i] = h.v[h.heapsize];
+  heapIncreaseKey(h, i, h.v[i]);
   maxHeapify(h, i);
 }
 
