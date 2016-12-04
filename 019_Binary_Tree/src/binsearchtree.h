@@ -18,22 +18,38 @@ private:
       : key_(key)
       , parent_(nullptr)
       , left_(nullptr)
-      , right_(nullptr) { std::cout << "default ctor with key\n"; }
+      , right_(nullptr) {}
     Node(const Node* node)
       : key_(node->key_)
       , parent_(node->parent_)
       , left_(node->left_)
-      , right_(node->right_) { std::cout << "copy ctor\n"; }
+      , right_(node->right_) {}
   };
-  
+
   Node* root_;
 private:
-  
+
+  void PreorderTreeWalk(Node* x) {
+    if ( x != nullptr ) {
+      std::cout << x->key_ << " ";
+      PreorderTreeWalk(x->left_);
+      PreorderTreeWalk(x->right_);
+    }
+  }
+
   void InorderTreeWalk(Node* x) {
     if ( x != nullptr ) {
       InorderTreeWalk(x->left_);
       std::cout << x->key_ << " ";
       InorderTreeWalk(x->right_);
+    }
+  }
+
+  void PostorderTreeWalk(Node* x) {
+    if ( x != nullptr ) {
+      PostorderTreeWalk(x->left_);
+      PostorderTreeWalk(x->right_);
+      std::cout << x->key_ << " ";
     }
   }
 
@@ -137,13 +153,15 @@ private:
       Clear(tree->right_);
     }
   }
-  
+
 public:
-  
+
   Tree() : root_(nullptr) {}
   ~Tree() { Clear(root_); }
-  
+
+  void PreorderTreeWalk() { PreorderTreeWalk(root_); }
   void InorderTreeWalk() { InorderTreeWalk(root_); }
+  void PostorderTreeWalk() { PostorderTreeWalk(root_); }
   bool Search(int32_t key) { return TreeSearch(root_, key) != nullptr; }
   int32_t Min() { return TreeMinimum(root_)->key_; }
   int32_t Max() { return TreeMaximum(root_)->key_; }
@@ -153,16 +171,16 @@ public:
     if ( node != nullptr ) {
       Node* succ = TreeSuccessor(node);
       if ( succ != nullptr ) {
-	return succ->key_;
+        return succ->key_;
       }
     }
     return TreeMaximum(root_)->key_;
   }
-  
+
   void Insert(int32_t key) {
     root_ = TreeInsert(root_, new Node(key));
   }
-  
+
   void Delete(int32_t key) {
     Node* node = TreeSearch(root_, key);
     if ( node != nullptr ) {

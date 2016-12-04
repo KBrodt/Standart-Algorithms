@@ -57,9 +57,7 @@ void maxHeapify(Heap &h, u32 i) {
   if ( r < h.heapsize && h.v[r] > h.v[largest] )
     largest = r;
   if ( i != largest ) {
-    u32 tmp = h.v[i]; // std::swap(h.v[i], h.v[largest]);
-    h.v[i] = h.v[largest];
-    h.v[largest] = tmp;
+    std::swap(h.v[i], h.v[largest]);
     maxHeapify(h, largest);
   }
 }
@@ -80,9 +78,7 @@ void maxHeapifynr(Heap &h, u32 i) {
       largest = r;
     if ( largest == i )
       return;
-    u32 tmp = h.v[i];
-    h.v[i] = h.v[largest];
-    h.v[largest] = tmp;
+    std::swap(h.v[i], h.v[largest]);
     i = largest;
   }
 }
@@ -110,7 +106,7 @@ u32 heapMaximum(Heap& h) {
 
 u32 heapExtractMax(Heap& h) {
   if ( h.v.size() < 1 ) {
-    std::cout << "Queue is empty!\n";
+    // std::cout << "Queue is empty!\n";
     return 0;
   }
   u32 max = h.v[0];
@@ -122,7 +118,7 @@ u32 heapExtractMax(Heap& h) {
 
 void heapIncreaseKey(Heap& h, u32 i, u32 key) {
   if ( key < h.v[i] ) {
-    std::cout << "New key is less then the current!\n";
+    // std::cout << "New key is less then the current!\n";
     return;
   }
   h.v[i] = key;
@@ -134,13 +130,16 @@ void heapIncreaseKey(Heap& h, u32 i, u32 key) {
 
 void maxHeapInsert(Heap& h, u32 key) {
   h.heapsize++;
-  h.v[h.heapsize - 1] = 0;
+  h.v[h.heapsize - 1] = key;
   heapIncreaseKey(h, h.heapsize - 1, key);
 }
 
 void maxHeapDelete(Heap& h, u32 i) {
   h.heapsize--;
   h.v[i] = h.v[h.heapsize];
+  if ( i >= h.heapsize ) {
+    return;
+  }
   heapIncreaseKey(h, i, h.v[i]);
   maxHeapify(h, i);
 }
