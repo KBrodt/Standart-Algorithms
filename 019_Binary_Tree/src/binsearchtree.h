@@ -2,7 +2,6 @@
 #define STDALG_BINARYTREE_H_
 
 #include <iostream>
-#include <cstdint>
 
 /**
  * Simple Binary Tree struct with basic operations
