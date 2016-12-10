@@ -52,14 +52,25 @@ private:
     }
   }
 
-  Node* TreeSearch(Node* x, int32_t key) {
-    if ( x == nullptr || key == x->key_ ) {
-      return x;
-    }
-    if ( key < x->key_ ) {
-      return TreeSearch(x->left_, key);
+  Node* TreeSearch(Node* x, int32_t key, bool recurcive = false) {
+    if ( recurcive ) {
+      if ( x == nullptr || key == x->key_ ) {
+        return x;
+      }
+      if ( key < x->key_ ) {
+        return TreeSearch(x->left_, key, recurcive);
+      } else {
+        return TreeSearch(x->right_, key, recurcive);
+      }
     } else {
-      return TreeSearch(x->right_, key);
+      while ( x != nullptr && x->key_ != key ) {
+        if ( key < x->key_ ) {
+          x = x->left_;
+        } else {
+          x = x->right_;
+        }
+      }
+      return x;
     }
   }
 
@@ -95,9 +106,9 @@ private:
     while ( x != nullptr ) {
       y = x;
       if ( z->key_ < x->key_ ) {
-	x = x->left_;
+        x = x->left_;
       } else {
-	x = x->right_;
+        x = x->right_;
       }
     }
     z->parent_ = y;
