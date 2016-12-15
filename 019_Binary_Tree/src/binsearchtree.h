@@ -1,19 +1,17 @@
-#ifndef STDALG_BINARYTREE_H_
-#define STDALG_BINARYTREE_H_
-
 #include <iostream>
 
 /**
  * Simple Binary Tree struct with basic operations
  */
+template <class Key = int32_t>
 class Tree {
 private:
   struct Node {
-    int32_t key_;
+    Key key_;
     Node* parent_ = nullptr;
     Node* left_ = nullptr;
     Node* right_ = nullptr;
-    Node(int32_t key)
+    Node(Key key)
       : key_(key)
       , parent_(nullptr)
       , left_(nullptr)
@@ -28,31 +26,31 @@ private:
   Node* root_;
 private:
 
-  void PreorderTreeWalk(Node* x) {
+  void PreorderTreeWalk(Node* x, std::ostream& os = std::cout) const {
     if ( x != nullptr ) {
-      std::cout << x->key_ << " ";
+      os << x->key_ << " ";
       PreorderTreeWalk(x->left_);
       PreorderTreeWalk(x->right_);
     }
   }
 
-  void InorderTreeWalk(Node* x) {
+  void InorderTreeWalk(Node* x, std::ostream& os = std::cout) const {
     if ( x != nullptr ) {
       InorderTreeWalk(x->left_);
-      std::cout << x->key_ << " ";
+      os << x->key_ << " ";
       InorderTreeWalk(x->right_);
     }
   }
 
-  void PostorderTreeWalk(Node* x) {
+  void PostorderTreeWalk(Node* x, std::ostream& os = std::cout) const {
     if ( x != nullptr ) {
       PostorderTreeWalk(x->left_);
       PostorderTreeWalk(x->right_);
-      std::cout << x->key_ << " ";
+      os << x->key_ << " ";
     }
   }
 
-  Node* TreeSearch(Node* x, int32_t key, bool recurcive = false) {
+  Node* TreeSearch(Node* x, const Key& key, bool recurcive = false) const {
     if ( recurcive ) {
       if ( x == nullptr || key == x->key_ ) {
         return x;
@@ -74,14 +72,14 @@ private:
     }
   }
 
-  Node* TreeMinimum(Node* x) {
+  Node* TreeMinimum(Node* x) const {
     while ( x->left_ != nullptr ) {
       x = x->left_;
     }
     return x;
   }
 
-  Node* TreeMaximum(Node* x) {
+  Node* TreeMaximum(Node* x) const {
     while ( x->right_ != nullptr ) {
       x = x->right_;
     }
@@ -144,9 +142,9 @@ private:
     } else {
       Node* y = TreeMinimum(z->right_);
       if ( y->parent_ != z ) {
-	tree = Transplant(tree, y, y->right_);
-	y->right_ = z->right_;
-	y->right_->parent_ = y;
+        tree = Transplant(tree, y, y->right_);
+        y->right_ = z->right_;
+        y->right_->parent_ = y;
       }
       tree = Transplant(tree, z, y);
       y->left_ = z->left_;
@@ -169,14 +167,23 @@ public:
   Tree() : root_(nullptr) {}
   ~Tree() { Clear(root_); }
 
-  void PreorderTreeWalk() { PreorderTreeWalk(root_); }
-  void InorderTreeWalk() { InorderTreeWalk(root_); }
-  void PostorderTreeWalk() { PostorderTreeWalk(root_); }
-  bool Search(int32_t key) { return TreeSearch(root_, key) != nullptr; }
-  int32_t Min() { return TreeMinimum(root_)->key_; }
-  int32_t Max() { return TreeMaximum(root_)->key_; }
+  void PreorderTreeWalk(std::ostream& os = std::cout) const {
+    PreorderTreeWalk(root_, os);
+  }
+  void InorderTreeWalk(std::ostream& os = std::cout) const {
+    InorderTreeWalk(root_, os);
+  }
+  void PostorderTreeWalk(std::ostream& os = std::cout) const {
+    PostorderTreeWalk(root_, os);
+  }
+  Key Search(const Key& key) const {
+    Node* node = TreeSearch(root_, key);
+    return node != nullptr ? node->key_ : Key();
+  }
+  Key Min() const { return TreeMinimum(root_)->key_; }
+  Key Max() const { return TreeMaximum(root_)->key_; }
 
-  int32_t Successor(int32_t key) {
+  Key Successor(Key key) {
     Node* node = TreeSearch(root_, key);
     if ( node != nullptr ) {
       Node* succ = TreeSuccessor(node);
@@ -187,16 +194,19 @@ public:
     return TreeMaximum(root_)->key_;
   }
 
-  void Insert(int32_t key) {
+  void Insert(const Key& key) {
     root_ = TreeInsert(root_, new Node(key));
   }
 
-  void Delete(int32_t key) {
+  void Delete(const Key &key) {
     Node* node = TreeSearch(root_, key);
     if ( node != nullptr ) {
       root_ = TreeDelete(root_, node);
     }
   }
-};
 
-#endif // STDALG_BINARYTREE_H_
+  friend std::ostream& operator<<(std::ostream& os, const Tree<Key>& tree) {
+    tree.InorderTreeWalk(os);
+    return os;
+  }
+};
