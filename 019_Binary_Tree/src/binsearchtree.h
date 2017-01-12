@@ -21,6 +21,8 @@ private:
       , parent_(node->parent_)
       , left_(node->left_)
       , right_(node->right_) {}
+
+    // ~Node() { delete left_; delete right_; std::cout << "destr node\n";}
   };
 
   Node* root_;
@@ -154,18 +156,18 @@ private:
     return tree;
   }
 
-  void Clear(Node* tree) {
+  void clear(Node* tree) {
     if ( tree != nullptr ) {
-      Clear(tree->left_);
+      clear(tree->left_);
+      clear(tree->right_);
       delete tree;
-      Clear(tree->right_);
     }
   }
 
 public:
 
   Tree() : root_(nullptr) {}
-  ~Tree() { Clear(root_); }
+  ~Tree() { /*delete root_;*/ clear(root_); std::cout << "destr bst\n";}
 
   void PreorderTreeWalk(std::ostream& os = std::cout) const {
     PreorderTreeWalk(root_, os);
