@@ -1,2 +1,2 @@
-# exlude /bin
-/bin
+# exclude directory /bin
+bin/
